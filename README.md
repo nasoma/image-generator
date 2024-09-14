@@ -35,5 +35,5 @@ This is an AI Image generator built using Python Flet. Image generation uses the
 
 ### Note
 
-This project is still under developmenoutputimage
+This project is still under development.
 t. 
