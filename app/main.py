@@ -30,7 +30,6 @@ def generate_image(prompt, width, height, api_key):
 
 
 def main(page: ft.Page):
-    
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.padding = 20
     page.window.resizable = False
@@ -253,7 +252,7 @@ def main(page: ft.Page):
             label="Enter your prompt",
             text_size=12,
             multiline=True,
-            bgcolor= page.theme.color_scheme.surface_variant,
+            bgcolor=page.theme.color_scheme.surface_variant,
             min_lines=1,
             max_lines=3,
             on_change=on_prompt_change,
@@ -272,7 +271,7 @@ def main(page: ft.Page):
             value=str(image_width),  # Default value
             on_change=on_width_change,
             label="Width",
-            bgcolor= page.theme.color_scheme.surface_variant,
+            bgcolor=page.theme.color_scheme.surface_variant,
             hint_text="Select a width for your image",
             border_radius=ft.border_radius.all(4),
             label_style=ft.TextStyle(size=10),
@@ -288,7 +287,7 @@ def main(page: ft.Page):
             ],
             value=str(image_height),  # Default value
             on_change=on_height_change,
-            bgcolor= page.theme.color_scheme.surface_variant,
+            bgcolor=page.theme.color_scheme.surface_variant,
             hint_text="Select a height for your image",
             border_radius=ft.border_radius.all(4),
             label="Height",
@@ -380,7 +379,7 @@ def main(page: ft.Page):
                         ft.AppBar(
                             title=ft.Text("AI Image Generator"),
                             bgcolor=page.theme.color_scheme.secondary,
-                            title_text_style=ft.TextStyle(size=12,color=page.theme.color_scheme.on_secondary),
+                            title_text_style=ft.TextStyle(size=12, color=page.theme.color_scheme.on_secondary),
                             actions=[
                                 ft.IconButton(
                                     icon=ft.icons.SETTINGS,
