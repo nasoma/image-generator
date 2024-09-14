@@ -12,15 +12,16 @@ This AI image generator is built using Python and Flet, utilizing the Flux.1 mod
 ### Configure the API Key:
 
 1. Navigate to setting page by clicking on the setting icon (cog wheel).
-2. Paste you API key.
+2. Paste your API key.
 3. Save and exit the settings page.
 
 ### Usage
 
 1. **Input Prompt**: Enter your desired image prompt in the text field.
 2. **Select Model**: Choose either the `dev` or `schnell` variant of the Flux.1 model. The default is `dev`.
-3. **Generate Image**: Click the "Generate Image" button to generate the image.
-4. **View Image**: The generated image will be displayed in the image widget.
+3. **Select Image Dimensions**: Choose your image dimensions. The default is `512` by `512`.
+4. **Generate Image**: Click the "Generate Image" button to generate the image.
+5. **View Image**: The generated image will be displayed in the image widget.
 
 ### Features
 
