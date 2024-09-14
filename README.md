@@ -31,8 +31,9 @@ This is an AI Image generator built using Python Flet. Image generation uses the
 
 - **Prompt**: A majestic mountain range with a crystal clear lake in the foreground.
 - **Output**:  
-  ![Generated Image](./output.png)
+  ![Generated Image](./outputimage.png)
 
 ### Note
 
-This project is still under development. Feel free to contribute to its improvement!
+This project is still under developmenoutputimage
+t. 
