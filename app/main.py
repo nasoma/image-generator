@@ -8,7 +8,7 @@ import threading
 import os
 
 from flet import ThemeMode, Theme, ColorScheme, colors
-from flet_core import TextStyle, ButtonStyle
+from flet_core import TextStyle
 
 
 def generate_image(prompt, width, height, api_key):
@@ -42,31 +42,9 @@ def main(page: ft.Page):
         color_scheme=ColorScheme(
             primary="#6B5E10",
             on_primary=colors.WHITE,
-            primary_container="#F6E388",
-            on_primary_container="#211B00",
             secondary="#655F40",
             on_secondary=colors.WHITE,
-            secondary_container="#EDE3BC",
-            on_secondary_container="#201C04",
-            tertiary="#426650",
-            on_tertiary=colors.WHITE,
-            tertiary_container="#C4ECD0",
-            on_tertiary_container="#002111",
-            error="#BA1A1A",
-            on_error=colors.WHITE,
-            error_container="#FFDAD6",
-            on_error_container="#410002",
-            background="#FFF9EC",
-            on_background="#1E1C13",
-            surface="#FFF9EC",
-            on_surface="#1E1C13",
             surface_variant="#E9E2D0",
-            on_surface_variant="#4A4739",
-            outline="#7C7768",
-            shadow=colors.BLACK,
-            inverse_surface="#333027",
-            on_inverse_surface="#F6F0E2",
-            inverse_primary="#D8C76F",
         )
     )
 
@@ -75,31 +53,9 @@ def main(page: ft.Page):
         color_scheme=ColorScheme(
             primary="#D8C76F",
             on_primary="#383000",
-            primary_container="#524700",
-            on_primary_container=colors.WHITE,
             secondary="#D0C7A2",
             on_secondary="#363116",
-            secondary_container="#4D472B",
-            on_secondary_container=colors.WHITE,
-            tertiary="#A8D0B5",
-            on_tertiary="#133724",
-            tertiary_container="#2A4E39",
-            on_tertiary_container=colors.WHITE,
-            error="#FFB4AB",
-            on_error="#690005",
-            error_container="#93000A",
-            on_error_container=colors.WHITE,
-            background="#15130C",
-            on_background="#E8E2D4",
-            surface="#E8E2D4",
-            on_surface="#E8E2D4",
             surface_variant="#4A4739",
-            on_surface_variant="#CCC6B5",
-            outline="#969180",
-            shadow=colors.BLACK,
-            inverse_surface="#E8E2D4",
-            on_inverse_surface="#333027",
-            inverse_primary="#6B5E10",
         )
     )
 
