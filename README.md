@@ -1,6 +1,6 @@
 # AI Image Generator
 
-This is an AI Image generator built using Python Flet. Image generation uses the Flux.1 model; dev and schnell variants served via a DeepInfra API. You will need an API key from DeepInfra.
+This AI image generator is built using Python and Flet, utilizing the Flux.1 model, including both the ‘dev’ and ‘schnell’ variants, served via the DeepInfra API. To use it, you will need a DeepInfra API key. Currently, it is only compatible with macOS.
 
 ## Getting Started
 
@@ -11,13 +11,14 @@ This is an AI Image generator built using Python Flet. Image generation uses the
 
 ### Configure the API Key:
 
-1. Create a file named `config.py` in the same directory as your main script.
-2. Add the following code to `config.py`, replacing `<YOUR_API_KEY>` with your actual DeepInfra API key:
+1. Navigate to setting page by clicking on the setting icon (cog wheel).
+2. Paste you API key.
+3. Save and exit the settings page.
 
 ### Usage
 
 1. **Input Prompt**: Enter your desired image prompt in the text field.
-2. **Select Model**: Choose either the `dev` or `schnell` variant of the Flux.1 model.
+2. **Select Model**: Choose either the `dev` or `schnell` variant of the Flux.1 model. The default is `dev`.
 3. **Generate Image**: Click the "Generate Image" button to generate the image.
 4. **View Image**: The generated image will be displayed in the image widget.
 
