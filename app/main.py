@@ -10,10 +10,10 @@ import os
 from flet import ThemeMode, Theme, ColorScheme, colors
 from flet_core import TextStyle
 
-
-def generate_image(prompt, width, height, api_key):
+def generate_image(prompt, width, height):
+    api_key = ''
     url = "https://api.deepinfra.com/v1/inference/black-forest-labs/FLUX-1-schnell"
-    headers = {"Authorization": f"bearer {api_key}"}
+    headers = {'Authorization': f'Bearer {api_key}'}
     data = {"prompt": prompt, "width": width, "height": height}
     json_data = json.dumps(data)
 
@@ -27,7 +27,6 @@ def generate_image(prompt, width, height, api_key):
         return image
     else:
         return None
-
 
 def main(page: ft.Page):
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
@@ -115,7 +114,7 @@ def main(page: ft.Page):
             def generate():
                 nonlocal generated_image, is_generating, image_width, image_height
                 try:
-                    image = generate_image(prompt, image_width, image_height, api_key)
+                    image = generate_image(prompt, image_width, image_height)
                     if image:
                         generated_image = image
                         image_bytes = BytesIO()
@@ -131,7 +130,7 @@ def main(page: ft.Page):
                         image_view.visible = False
                         placeholder_text.visible = True
                         download_button.visible = False
-                        page.open(ft.SnackBar(content=ft.Text("Failed to generate image. Please try again.")))
+                        page.open(ft.SnackBar(content=ft.Text("Failed to generate image. Please try again later.")))
                 except Exception as e:
                     print(f"Error generating image: {e}")
                     image_view.src_base64 = None
@@ -370,6 +369,5 @@ def main(page: ft.Page):
     page.on_route_change = route_change
     page.on_view_pop = view_pop
     page.go(page.route)
-
 
 ft.app(target=main)
