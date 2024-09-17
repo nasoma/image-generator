@@ -6,6 +6,7 @@ from io import BytesIO
 from PIL import Image
 import threading
 import os
+import keyring
 
 from flet import ThemeMode, Theme, ColorScheme, colors
 from flet_core import TextStyle
@@ -61,7 +62,7 @@ def main(page: ft.Page):
     page.theme = light_theme
     page.theme_mode = ThemeMode.LIGHT
 
-    api_key = ""
+    api_key = keyring.get_password("AI Image Generator", "api_key") or ""
     generated_image = None
     is_generating = False
 
@@ -75,11 +76,31 @@ def main(page: ft.Page):
         def save_api_key(e):
             nonlocal api_key
             api_key = api_key_field.value
+            keyring.set_password("AI Image Generator", "api_key", api_key)
             page.go("/")
 
-        api_key_field = ft.TextField(label="DeepInfra API Key",
-                                     label_style=TextStyle(size=10),
-                                     text_size=12, bgcolor=page.theme.color_scheme.surface_variant)
+        def toggle_password_visibility(e):
+            api_key_field.password = not api_key_field.password
+            password_icon.icon = ft.icons.VISIBILITY_OFF if api_key_field.password else ft.icons.VISIBILITY
+            page.update()
+
+        password_icon = ft.IconButton(
+            icon=ft.icons.VISIBILITY_OFF,
+            on_click=toggle_password_visibility,
+            icon_size=12
+        )
+
+
+        api_key_field = ft.TextField(
+            label="DeepInfra API Key",
+            label_style=TextStyle(size=12),
+            text_size=12,
+            bgcolor=page.theme.color_scheme.surface_variant,
+            value=api_key,
+            password=True,
+            can_reveal_password=False,
+            suffix=password_icon,
+        )
         save_button = ft.FilledButton("Save", on_click=save_api_key, expand=True, width=page.width)
 
         return ft.Column(

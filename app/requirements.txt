@@ -1,3 +1,4 @@
-flet
-pillow
-requests
+flet==0.24.1
+keyring==25.3.0
+pillow==10.4.0
+requests==2.32.3
