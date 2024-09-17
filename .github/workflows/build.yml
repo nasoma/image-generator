@@ -55,7 +55,7 @@ jobs:
       continue-on-error: true
 
     - name: Check build output
-      working-directory: ./app
+      #working-directory: ./app
       run: |
         echo "Contents of current directory after build:"
         ls -la
