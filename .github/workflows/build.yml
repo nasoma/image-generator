@@ -1,14 +1,14 @@
 name: macOS Build
 
-on:
-  push:
-    branches:
-      - master
-      - main
-  pull_request:
-    branches:
-      - master
-      - main
+#on:
+#  push:
+#    branches:
+#      - master
+#      - main
+#  pull_request:
+#    branches:
+#      - master
+#      - main
   workflow_dispatch:
 
 env:
@@ -71,8 +71,4 @@ jobs:
         path: ${{ github.workspace }}/app/build/macos/**
         if-no-files-found: warn
         overwrite: false
-    - run: |
-         echo "Current directory: $(pwd)"
-    - name: Debug - List build directory
-      run: |
-        ls -R /build
+
