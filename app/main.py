@@ -1,3 +1,10 @@
+# TODO : Api key input box too big, find fix
+#   Splash screen bug: fix
+#   Add option to toggle between schell and dev models. ✅
+#   refactor and modularize
+#   consider better ways to handle the api key on the users system
+
+
 import flet as ft
 import requests
 import json
@@ -6,18 +13,70 @@ from io import BytesIO
 from PIL import Image
 import threading
 import os
-import keyring
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+
 
 from flet import ThemeMode, Theme, ColorScheme, colors
 from flet_core import TextStyle
 
-def generate_image(api_key, prompt, width, height):
-    url = "https://api.deepinfra.com/v1/inference/black-forest-labs/FLUX-1-schnell"
+def generate_key():
+    salt = b'salt_'
+    kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=salt,
+        iterations=100000,
+    )
+    key = base64.urlsafe_b64encode(kdf.derive(b"fD3!bO3%B#iD#QfPNn"))
+    return key
+
+def encrypt_api_key(api_key):
+    key = generate_key()
+    f = Fernet(key)
+    return f.encrypt(api_key.encode()).decode()
+
+def decrypt_api_key(encrypted_api_key):
+    key = generate_key()
+    f = Fernet(key)
+    return f.decrypt(encrypted_api_key.encode()).decode()
+
+def save_api_key_to_file(api_key):
+    encrypted_key = encrypt_api_key(api_key)
+    config_dir = os.path.join(os.path.expanduser("~"), ".ai_image_generator")
+    os.makedirs(config_dir, exist_ok=True)
+    config_file = os.path.join(config_dir, "config.json")
+    with open(config_file, "w") as f:
+        json.dump({"encrypted_api_key": encrypted_key}, f)
+
+def load_api_key():
+    config_dir = os.path.join(os.path.expanduser("~"), ".ai_image_generator")
+    config_file = os.path.join(config_dir, "config.json")
+    if os.path.exists(config_file):
+        with open(config_file, "r") as f:
+            config = json.load(f)
+            encrypted_key = config.get("encrypted_api_key", "")
+            if encrypted_key:
+                try:
+                    return decrypt_api_key(encrypted_key)
+                except:
+                    return ""
+    return ""
+
+def generate_image(api_key, prompt, width, height, model):
+    if model == "schnell":
+        url = "https://api.deepinfra.com/v1/inference/black-forest-labs/FLUX-1-schnell"
+    elif model == "dev":
+        url ="https://api.deepinfra.com/v1/inference/black-forest-labs/FLUX-1-dev"
+    else:
+        return None
     headers = {'Authorization': f'Bearer {api_key}'}
     data = {"prompt": prompt, "width": width, "height": height}
     json_data = json.dumps(data)
 
     response = requests.post(url, headers=headers, data=json_data)
+    print(model)
 
     if response.status_code == 200:
         response_data = response.json()
@@ -33,6 +92,7 @@ def main(page: ft.Page):
     page.padding = 20
     page.window.resizable = False
     page.window.width = 400
+    page.window.height=700
     page.window.center()
 
     # Define light and dark themes
@@ -62,7 +122,7 @@ def main(page: ft.Page):
     page.theme = light_theme
     page.theme_mode = ThemeMode.LIGHT
 
-    api_key = keyring.get_password("AI Image Generator", "api_key") or ""
+    api_key = load_api_key()
     generated_image = None
     is_generating = False
 
@@ -76,20 +136,9 @@ def main(page: ft.Page):
         def save_api_key(e):
             nonlocal api_key
             api_key = api_key_field.value
-            keyring.set_password("AI Image Generator", "api_key", api_key)
+            save_api_key_to_file(api_key)
+            page.open(ft.SnackBar(content=ft.Text("API key saved successfully")))
             page.go("/")
-
-        def toggle_password_visibility(e):
-            api_key_field.password = not api_key_field.password
-            password_icon.icon = ft.icons.VISIBILITY_OFF if api_key_field.password else ft.icons.VISIBILITY
-            page.update()
-
-        password_icon = ft.IconButton(
-            icon=ft.icons.VISIBILITY_OFF,
-            on_click=toggle_password_visibility,
-            icon_size=12
-        )
-
 
         api_key_field = ft.TextField(
             label="DeepInfra API Key",
@@ -99,7 +148,7 @@ def main(page: ft.Page):
             value=api_key,
             password=True,
             can_reveal_password=False,
-            suffix=password_icon,
+
         )
         save_button = ft.FilledButton("Save", on_click=save_api_key, expand=True, width=page.width)
 
@@ -113,6 +162,23 @@ def main(page: ft.Page):
 
     def main_page():
         nonlocal generated_image, is_generating, image_width, image_height, api_key
+
+        #selected_model = "Schnell"
+        model_label = ft.Text("Select Model:", size=12)
+        model_radio_group=ft.RadioGroup(
+            content=ft.Row(
+                [
+                    ft.Radio(value="schnell", label="Schnell"),
+                    ft.Radio(value="dev", label="Dev"),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+
+                spacing=10,
+            ),
+
+            value="schnell",
+            on_change=lambda e: setattr(model_radio_group, "value", e.control.value),
+        )
 
         def submit_prompt(e=None):
             nonlocal generated_image, is_generating, image_width, image_height, api_key
@@ -138,7 +204,7 @@ def main(page: ft.Page):
             def generate():
                 nonlocal generated_image, is_generating, image_width, image_height, api_key
                 try:
-                    image = generate_image(api_key, prompt, image_width, image_height)
+                    image = generate_image(api_key, prompt, image_width, image_height, model_radio_group.value)
                     if image:
                         generated_image = image
                         image_bytes = BytesIO()
@@ -302,9 +368,22 @@ def main(page: ft.Page):
                     [
                         width_dropdown,
                         height_dropdown,
+
                     ],
-                    alignment=ft.MainAxisAlignment.CENTER  # Center horizontally
+                    alignment=ft.MainAxisAlignment.CENTER,  # Center horizontally
+
                 ),
+
+                ft.Column(
+                    [
+                        model_label,
+                        model_radio_group,
+                    ],
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    #alignment=ft.MainAxisAlignment.CENTER,
+                ),
+
+
                 ft.Row([submit_button, clear_button], alignment=ft.MainAxisAlignment.CENTER),
                 ft.Stack(
                     [
