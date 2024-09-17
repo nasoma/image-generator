@@ -10,8 +10,7 @@ import os
 from flet import ThemeMode, Theme, ColorScheme, colors
 from flet_core import TextStyle
 
-def generate_image(prompt, width, height):
-    api_key = ''
+def generate_image(api_key, prompt, width, height):
     url = "https://api.deepinfra.com/v1/inference/black-forest-labs/FLUX-1-schnell"
     headers = {'Authorization': f'Bearer {api_key}'}
     data = {"prompt": prompt, "width": width, "height": height}
@@ -92,15 +91,19 @@ def main(page: ft.Page):
         )
 
     def main_page():
-        nonlocal generated_image, is_generating, image_width, image_height
+        nonlocal generated_image, is_generating, image_width, image_height, api_key
 
         def submit_prompt(e=None):
-            nonlocal generated_image, is_generating, image_width, image_height
+            nonlocal generated_image, is_generating, image_width, image_height, api_key
             if is_generating:
                 return
             prompt = prompt_field.value
             if not prompt:
                 page.open(ft.SnackBar(content=ft.Text("Please enter a prompt before generating an image.")))
+                return
+
+            if not api_key:
+                page.open(ft.SnackBar(content=ft.Text("Please set your API key in the settings.")))
                 return
 
             is_generating = True
@@ -112,9 +115,9 @@ def main(page: ft.Page):
             page.update()
 
             def generate():
-                nonlocal generated_image, is_generating, image_width, image_height
+                nonlocal generated_image, is_generating, image_width, image_height, api_key
                 try:
-                    image = generate_image(prompt, image_width, image_height)
+                    image = generate_image(api_key, prompt, image_width, image_height)
                     if image:
                         generated_image = image
                         image_bytes = BytesIO()
