@@ -55,7 +55,7 @@ jobs:
       continue-on-error: true
 
     - name: Check build output
-      #working-directory: ./app
+      working-directory: ./app
       run: |
         echo "Contents of current directory after build:"
         ls -la
@@ -68,9 +68,11 @@ jobs:
       uses: actions/upload-artifact@v4.3.4
       with:
         name: macos-build-artifact
-        path: /build/macos/**/*
+        path: ${{ github.workspace }}/build/macos/**
         if-no-files-found: warn
         overwrite: false
+    - run: |
+         echo "Current directory: $(pwd)"
     - name: Debug - List build directory
       run: |
         ls -R /build
