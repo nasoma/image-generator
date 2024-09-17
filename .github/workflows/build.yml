@@ -57,6 +57,6 @@ jobs:
       uses: actions/upload-artifact@v4.3.4  # https://github.com/marketplace/actions/upload-a-build-artifact
       with:
         name: macos-build-artifact  # the name of the artifact
-        path: build/macos  # location of Flet build output
+        path: packages/macos  # location of Flet build output
         if-no-files-found: warn  # Fail the action with an error message if no files are found
         overwrite: false  # If true, an artifact with a matching name will be deleted before a new one is uploaded. If false, the action will fail if an artifact for the given name already exists. Does not fail if the artifact does not exist.
