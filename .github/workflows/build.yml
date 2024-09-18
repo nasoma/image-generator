@@ -1,14 +1,6 @@
 name: macOS Build
 
-#on:
-#  push:
-#    branches:
-#      - master
-#      - main
-#  pull_request:
-#    branches:
-#      - master
-#      - main
+on:
   workflow_dispatch:
 
 env:

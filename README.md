@@ -1,8 +1,14 @@
 # AI Image Generator
 
-This AI image generator is built using Python and Flet, utilizing the Flux.1 model, including both the ‘dev’ and ‘schnell’ variants, served via the DeepInfra API. To use it, you will need a DeepInfra API key. Currently, it is only compatible with macOS.
+This simple AI image generator is built using Python and Flet, utilizing the Flux.1 model, including both the ‘dev’ and ‘schnell’ variants, served via the DeepInfra API. To use it, you will need a DeepInfra API key. Currently, it is only compatible with macOS.
 
 ## Getting Started
+
+### Download
+
+Go to [releases](https://github.com/nasoma/image-generator/releases) and download the latest zip archive.
+
+
 
 ### Obtain DeepInfra API Key:
 
@@ -11,7 +17,7 @@ This AI image generator is built using Python and Flet, utilizing the Flux.1 mod
 
 ### Configure the API Key:
 
-1. Navigate to setting page by clicking on the setting icon (cog wheel).
+1. Navigate to the settings page by clicking on the settings icon (cog wheel).
 2. Paste your API key.
 3. Save and exit the settings page.
 
@@ -28,10 +34,11 @@ This AI image generator is built using Python and Flet, utilizing the Flux.1 mod
 - User-friendly interface built with Flet.
 - Integration with DeepInfra API for image generation.
 - Support for Flux.1 model variants (`dev` and `schnell`).
+- Light and dark mode support.
 
 ### Example
 
-- **Prompt**: A majestic mountain range with a crystal clear lake in the foreground.
+- **Prompt**: Create an image of three puppies standing against a wall with colorful, artistic graffiti. The puppies should be playful and curious, each having a unique expression.
 - **Output**:  
   ![Generated Image](./outputimage.png)
 
