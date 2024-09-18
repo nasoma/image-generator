@@ -4,12 +4,6 @@ This simple AI image generator is built using Python and Flet, utilizing the Flu
 
 ## Getting Started
 
-### Download
-
-Go to [releases](https://github.com/nasoma/image-generator/releases) and download the latest zip archive.
-
-
-
 ### Obtain DeepInfra API Key:
 
 1. Visit [DeepInfra](https://deepinfra.ai/) and sign up for an account.
