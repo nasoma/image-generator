@@ -3,6 +3,7 @@
 #   Add option to toggle between schell and dev models. ✅
 #   refactor and modularize
 #   consider better ways to handle the api key on the users system
+#   better security: generate unique salt for each user
 
 
 import flet as ft
