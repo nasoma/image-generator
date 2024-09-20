@@ -77,7 +77,6 @@ def generate_image(api_key, prompt, width, height, model):
     json_data = json.dumps(data)
 
     response = requests.post(url, headers=headers, data=json_data)
-    print(model)
 
     if response.status_code == 200:
         response_data = response.json()
@@ -95,6 +94,7 @@ def main(page: ft.Page):
     page.window.width = 400
     page.window.height=700
     page.window.center()
+
 
     # Define light and dark themes
     light_theme = Theme(
@@ -119,7 +119,7 @@ def main(page: ft.Page):
         )
     )
 
-    # Start with the light theme
+    # Default to light theme on launch
     page.theme = light_theme
     page.theme_mode = ThemeMode.LIGHT
 
@@ -127,7 +127,7 @@ def main(page: ft.Page):
     generated_image = None
     is_generating = False
 
-    # Image dimensions - use Dropdown now
+    # Default Image dimensions
     image_width = 512
     image_height = 512
 
@@ -164,7 +164,7 @@ def main(page: ft.Page):
     def main_page():
         nonlocal generated_image, is_generating, image_width, image_height, api_key
 
-        #selected_model = "Schnell"
+        # Default to schnell model on launch
         model_label = ft.Text("Select Model:", size=12)
         model_radio_group=ft.RadioGroup(
             content=ft.Row(
@@ -307,7 +307,6 @@ def main(page: ft.Page):
             label_style=ft.TextStyle(size=12)
         )
 
-        # Use Dropdown for width and height
         width_dropdown = ft.Dropdown(
             width=150,
             options=[
@@ -383,7 +382,6 @@ def main(page: ft.Page):
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     #alignment=ft.MainAxisAlignment.CENTER,
                 ),
-
 
                 ft.Row([submit_button, clear_button], alignment=ft.MainAxisAlignment.CENTER),
                 ft.Stack(
