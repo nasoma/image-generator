@@ -18,16 +18,17 @@ This simple AI image generator is built using Python and Flet, utilizing the Flu
 ### Usage
 
 1. **Input Prompt**: Enter your desired image prompt in the text field.
-2. **Select Model**: Choose either the `dev` or `schnell` variant of the Flux.1 model. The default is `dev`.
+2. **Select Model**: Choose either the `dev` or `schnell` variant of the Flux.1 model. The default is `schnell`.
 3. **Select Image Dimensions**: Choose your image dimensions. The default is `512` by `512`.
 4. **Generate Image**: Click the "Generate Image" button to generate the image.
-5. **View Image**: The generated image will be displayed in the image widget.
+5. **View Image**: The generated image will be displayed in the image widget. You can download the image using the "Download Image" button.
+
 
 ### Features
 
 - User-friendly interface built with Flet.
-- Integration with DeepInfra API for image generation.
-- Support for Flux.1 model variants (`dev` and `schnell`).
+- Image generation using Flux.1 AI models (`dev` and `schnell`) through the DeepInfra API.
+- View and download generated images.
 - Light and dark mode support.
 
 ### Example
