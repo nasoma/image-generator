@@ -14,6 +14,8 @@ from io import BytesIO
 from PIL import Image
 import threading
 import os
+import random
+import string
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -64,6 +66,12 @@ def load_api_key():
                 except:
                     return ""
     return ""
+
+
+def generate_random_string(length=8):
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choice(characters) for _ in range(length))
+
 
 def generate_image(api_key, prompt, width, height, model):
     if model == "schnell":
@@ -272,8 +280,10 @@ def main(page: ft.Page):
 
         def download_image(e):
             if generated_image:
+                unique_suffix = generate_random_string()
+                file_name = f"generated_image_{unique_suffix}.webp"
                 save_file_dialog.save_file(
-                    file_name="generated_image.webp",
+                    file_name=file_name,
                     allowed_extensions=["webp"]
                 )
             else:
