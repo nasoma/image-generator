@@ -1,6 +1,6 @@
 # TODO : Api key input box too big, find fix
 #   Splash screen bug: fix
-#   Add option to toggle between schell and dev models. ✅
+#   Add option to toggle between schnell and dev models. ✅
 #   refactor and modularize
 #   consider better ways to handle the api key on the users system
 #   better security: generate unique salt for each user
@@ -128,8 +128,8 @@ def main(page: ft.Page):
     is_generating = False
 
     # Default Image dimensions
-    image_width = 512
-    image_height = 512
+    image_width = 1024
+    image_height = 1024
 
     def settings_page():
         nonlocal api_key, page
@@ -209,7 +209,7 @@ def main(page: ft.Page):
                     if image:
                         generated_image = image
                         image_bytes = BytesIO()
-                        image.save(image_bytes, format="PNG")
+                        image.save(image_bytes, format="WebP")
                         image_bytes.seek(0)
                         image_view.src_base64 = base64.b64encode(image_bytes.getvalue()).decode()
                         image_view.visible = True
@@ -249,9 +249,9 @@ def main(page: ft.Page):
             nonlocal generated_image
             if generated_image and path:
                 try:
-                    if not path.lower().endswith('.png'):
-                        path += '.png'
-                    generated_image.save(path)
+                    if not path.lower().endswith('.webp'):
+                        path += '.webp'
+                    generated_image.save(path, quality=100)
                     # Get the directory name and file name
                     dir_name = os.path.dirname(path)
                     file_name = os.path.basename(path)
@@ -273,8 +273,8 @@ def main(page: ft.Page):
         def download_image(e):
             if generated_image:
                 save_file_dialog.save_file(
-                    file_name="generated_image.png",
-                    allowed_extensions=["png"]
+                    file_name="generated_image.webp",
+                    allowed_extensions=["webp"]
                 )
             else:
                 page.open(
@@ -282,8 +282,8 @@ def main(page: ft.Page):
 
         def clear_prompt(e):
             prompt_field.value = ""
-            width_dropdown.value = "512"
-            height_dropdown.value = "512"
+            width_dropdown.value = "1024"
+            height_dropdown.value = "1024"
             page.update()
 
         def on_width_change(e):
