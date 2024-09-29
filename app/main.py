@@ -20,12 +20,11 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-
 from flet import ThemeMode, Theme, ColorScheme, colors
 from flet_core import TextStyle
 
 def generate_key():
-    salt = b'salt_'
+    salt = b'n6ARSf9Fw*$u$VJlLbC$njBD'
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
         length=32,
@@ -72,7 +71,6 @@ def generate_random_string(length=8):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choice(characters) for _ in range(length))
 
-
 def generate_image(api_key, prompt, width, height, model):
     if model == "schnell":
         url = "https://api.deepinfra.com/v1/inference/black-forest-labs/FLUX-1-schnell"
@@ -102,7 +100,6 @@ def main(page: ft.Page):
     page.window.width = 400
     page.window.height=700
     page.window.center()
-
 
     # Define light and dark themes
     light_theme = Theme(
